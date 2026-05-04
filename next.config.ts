@@ -1,7 +1,14 @@
-import type { NextConfig } from "next";
+﻿/** @type {import('next').NextConfig} */
+const nextConfig = {
+  turbopack: {
+    resolveExtensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx'],
+  },
+  images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: 'res.cloudinary.com' },
+      { protocol: 'http', hostname: 'localhost' },
+    ],
+  },
+}
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
-
-export default nextConfig;
+module.exports = nextConfig;
