@@ -47,6 +47,8 @@ export async function POST(request: NextRequest) {
     await writeCollection('users', users);
     return NextResponse.json(newUser);
   } catch (error) {
+    console.log(error);
+    
     return NextResponse.json({ error: 'Failed' }, { status: 500 });
   }
 }
