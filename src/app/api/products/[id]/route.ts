@@ -3,26 +3,31 @@ import { getDatabase } from '@/lib/mongodb';
 
 export async function GET(
   request: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  context: { params: { id: string } }
 ) {
   try {
-    const { id } = await context.params;
+    const { id } = context.params;
     const { ObjectId } = await import('mongodb');
+
+    if (!ObjectId.isValid(id)) {
+      return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });
+    }
+
     const db = await getDatabase();
-    const product = await db.collection('products').findOne({ _id: new ObjectId(id) });
-    
-    if (!product) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-    
-    return NextResponse.json({ 
-      ...product, 
+
+    const product = await db
+      .collection('products')
+      .findOne({ _id: new ObjectId(id) });
+
+    if (!product) {
+      return NextResponse.json({ error: 'Not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({
+      ...product,
       id: product._id.toString(),
-      price: product.price || 0,
-      name: product.name || '',
-      description: product.description || '',
-      image: product.image || '',
-      category: product.category || '',
-      stock: product.stock || 0,
     });
+
   } catch (error: any) {
     console.error('Product GET error:', error);
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
