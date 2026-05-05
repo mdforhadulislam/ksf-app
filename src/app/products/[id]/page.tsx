@@ -127,7 +127,7 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
               <p className="text-gray-600">{product.category}</p>
             </div>
 
-            <p className="text-5xl font-bold text-black">
+            <p className="text-2xl font-bold text-black">
               BDT {((product?.price || 0)).toFixed(2)}
             </p>
 
