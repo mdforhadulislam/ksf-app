@@ -3,10 +3,11 @@ import { getDatabase } from '@/lib/mongodb';
 
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = context.params;
+    const { id } = await context.params; // ✅ await লাগবে
+
     const { ObjectId } = await import('mongodb');
 
     if (!ObjectId.isValid(id)) {
