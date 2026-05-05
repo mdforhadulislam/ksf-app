@@ -9,7 +9,7 @@ export default function ProductsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/products')
+    fetch('https://ksf-app.onrender.com/api/products')
       .then(res => res.json())
       .then(data => {
         setProducts(data);

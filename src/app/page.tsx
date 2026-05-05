@@ -14,7 +14,7 @@ export default function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch('/api/products');
+        const res = await fetch('https://ksf-app.onrender.com/api/products');
         const data = await res.json();
         setProducts(data.slice(0, 8));
       } catch (error) {

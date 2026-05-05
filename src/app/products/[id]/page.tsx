@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, use } from 'react';
 import { useRouter } from 'next/navigation';
 import ProductSlider from '@/components/ProductSlider';
 import { useCart } from '@/context/CartContext';
@@ -8,20 +8,21 @@ import toast from 'react-hot-toast';
 import { ShoppingCart, Zap, ArrowLeft } from 'lucide-react';
 
 interface ProductDetailsProps {
-  params: { id: string };
+  params: Promise<{ id: string }>; // ✅ Promise
 }
 
 export default function ProductDetailsPage({ params }: ProductDetailsProps) {
+  const { id } = use(params); // ✅ unwrap params
+
   const [product, setProduct] = useState<any>(null);
   const [related, setRelated] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const { addToCart } = useCart();
   const router = useRouter();
 
-
- const fetchProduct = async () => {
+  const fetchProduct = async () => {
     try {
-      const res = await fetch(`/api/products/${params.id}`);
+      const res = await fetch(`/api/products/${id}`);
       const data = await res.json();
       if (res.ok) {
         setProduct(data);
@@ -35,7 +36,7 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
     try {
       const res = await fetch('/api/products');
       const data = await res.json();
-      setRelated(data.filter((p: any) => p.id !== params.id).slice(0, 4));
+      setRelated(data.filter((p: any) => p.id !== id).slice(0, 4));
     } catch (error) {
       console.error('Failed to fetch related');
     } finally {
@@ -44,13 +45,11 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
   };
 
   useEffect(() => {
-    if (params.id) {
+    if (id) {
       fetchProduct();
       fetchRelated();
     }
-  }, [params.id]);
-
- 
+  }, [id]); // ✅ use id
 
   const handleAddToCart = () => {
     if (product) {
@@ -110,7 +109,11 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           <div className="bg-gray-100 rounded-2xl h-96 flex items-center justify-center text-8xl">
             {product.image ? (
-              <img src={product.image} alt={product.name} className="w-full h-full object-cover rounded-2xl" />
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-full object-cover rounded-2xl"
+              />
             ) : (
               '🎧'
             )}
@@ -133,12 +136,16 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
             </p>
 
             <div className="flex items-center gap-4">
-              <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                product.stock > 0 
-                  ? 'bg-green-100 text-green-700' 
-                  : 'bg-red-100 text-red-700'
-              }`}>
-                {product.stock > 0 ? `In Stock (${product.stock})` : 'Out of Stock'}
+              <span
+                className={`px-3 py-1 rounded-full text-sm font-medium ${
+                  product.stock > 0
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-red-100 text-red-700'
+                }`}
+              >
+                {product.stock > 0
+                  ? `In Stock (${product.stock})`
+                  : 'Out of Stock'}
               </span>
             </div>
 
@@ -151,6 +158,7 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
                 <ShoppingCart size={20} />
                 Add to Cart
               </button>
+
               <button
                 onClick={handleBuyNow}
                 disabled={product.stock === 0}
