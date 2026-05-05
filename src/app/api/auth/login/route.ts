@@ -26,10 +26,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       id: user._id.toString(),
       email: user.email,
-      displayName: user.displayName,
-      role: user.role,
+      displayName: user.displayName || '',
+      role: user.role || 'user',
     });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('Login error:', error);
+    return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }

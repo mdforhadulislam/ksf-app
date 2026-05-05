@@ -19,15 +19,19 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
   const router = useRouter();
 
   useEffect(() => {
-    fetchProduct();
-    fetchRelated();
+    if (params.id) {
+      fetchProduct();
+      fetchRelated();
+    }
   }, [params.id]);
 
   const fetchProduct = async () => {
     try {
       const res = await fetch(`/api/products/${params.id}`);
       const data = await res.json();
-      setProduct(data);
+      if (res.ok) {
+        setProduct(data);
+      }
     } catch (error) {
       console.error('Failed to fetch product');
     }
@@ -51,7 +55,7 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
         id: product.id,
         productId: product.id,
         name: product.name,
-        price: product.price,
+        price: product.price || 0,
         image: product.image,
         quantity: 1,
       });
@@ -60,8 +64,17 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
   };
 
   const handleBuyNow = () => {
-    handleAddToCart();
-    router.push('/checkout');
+    if (product) {
+      addToCart({
+        id: product.id,
+        productId: product.id,
+        name: product.name,
+        price: product.price || 0,
+        image: product.image,
+        quantity: 1,
+      });
+      router.push('/checkout');
+    }
   };
 
   if (loading) {
@@ -109,7 +122,7 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
             </div>
 
             <p className="text-5xl font-bold text-black">
-              ${product.price.toFixed(2)}
+              ${((product?.price || 0)).toFixed(2)}
             </p>
 
             <p className="text-gray-700 leading-relaxed">

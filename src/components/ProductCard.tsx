@@ -3,6 +3,8 @@
 import { Product } from '@/types';
 import { ShoppingCart, Zap } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useCart } from '@/context/CartContext';
+import toast from 'react-hot-toast';
 
 interface ProductCardProps {
   product: Product;
@@ -11,6 +13,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, index = 0 }: ProductCardProps) {
   const router = useRouter();
+  const { addToCart } = useCart();
 
   const handleClick = () => {
     router.push(`/products/${product.id}`);
@@ -18,7 +21,28 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // Add to cart logic could go here
+    addToCart({
+      id: product.id!,
+      productId: product.id!,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: 1,
+    });
+    toast.success('Added to cart');
+  };
+
+  const handleBuyNow = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    addToCart({
+      id: product.id!,
+      productId: product.id!,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: 1,
+    });
+    router.push('/checkout');
   };
 
   return (
@@ -48,7 +72,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             {product.name}
           </h3>
           <span className="text-xl font-bold text-black ml-2">
-            ${product.price.toFixed(2)}
+            ${(product?.price || 0).toFixed(2)}
           </span>
         </div>
         
@@ -66,7 +90,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             Add
           </button>
           <button
-            onClick={(e) => { e.stopPropagation(); handleClick(); }}
+            onClick={handleBuyNow}
             disabled={product.stock === 0}
             className="flex-1 bg-white text-black py-2.5 rounded-xl border-2 border-neon-green hover:bg-neon-green hover:text-black transition font-medium text-sm flex items-center justify-center gap-2 disabled:opacity-50"
           >

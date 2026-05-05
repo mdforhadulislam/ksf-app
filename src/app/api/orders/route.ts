@@ -5,9 +5,16 @@ export async function GET() {
   try {
     const db = await getDatabase();
     const orders = await db.collection('orders').find({}).toArray();
-    return NextResponse.json(orders.map(o => ({ ...o, id: o._id.toString() })));
+    return NextResponse.json(orders.map(o => ({ 
+      ...o, 
+      id: o._id.toString(),
+      total: o.total || 0,
+      status: o.status || 'pending',
+      items: o.items || [],
+    })));
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('Orders GET error:', error);
+    return NextResponse.json([]);
   }
 }
 
@@ -23,6 +30,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ ...body, id: result.insertedId.toString() });
   } catch (error: any) {
+    console.error('Orders POST error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -41,6 +49,7 @@ export async function PATCH(request: NextRequest) {
     
     return NextResponse.json({ success: true });
   } catch (error: any) {
+    console.error('Orders PATCH error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

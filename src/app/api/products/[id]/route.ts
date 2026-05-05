@@ -12,9 +12,20 @@ export async function GET(
     const product = await db.collection('products').findOne({ _id: new ObjectId(id) });
     
     if (!product) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-    return NextResponse.json({ ...product, id: product._id.toString() });
+    
+    return NextResponse.json({ 
+      ...product, 
+      id: product._id.toString(),
+      price: product.price || 0,
+      name: product.name || '',
+      description: product.description || '',
+      image: product.image || '',
+      category: product.category || '',
+      stock: product.stock || 0,
+    });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('Product GET error:', error);
+    return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
 
@@ -35,6 +46,7 @@ export async function PUT(
     
     return NextResponse.json({ success: true });
   } catch (error: any) {
+    console.error('Product PUT error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -51,6 +63,7 @@ export async function DELETE(
     await db.collection('products').deleteOne({ _id: new ObjectId(id) });
     return NextResponse.json({ success: true });
   } catch (error: any) {
+    console.error('Product DELETE error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

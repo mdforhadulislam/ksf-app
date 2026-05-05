@@ -5,9 +5,17 @@ export async function GET() {
   try {
     const db = await getDatabase();
     const users = await db.collection('users').find({}).toArray();
-    return NextResponse.json(users.map(u => ({ ...u, id: u._id.toString(), uid: u._id.toString() })));
+    return NextResponse.json(users.map(u => ({ 
+      ...u, 
+      id: u._id.toString(), 
+      uid: u._id.toString(),
+      email: u.email || '',
+      displayName: u.displayName || '',
+      role: u.role || 'user',
+    })));
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('Users GET error:', error);
+    return NextResponse.json([]);
   }
 }
 
@@ -23,6 +31,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ ...body, id: result.insertedId.toString() });
   } catch (error: any) {
+    console.error('Users POST error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -41,6 +50,7 @@ export async function PATCH(request: NextRequest) {
     
     return NextResponse.json({ success: true });
   } catch (error: any) {
+    console.error('Users PATCH error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

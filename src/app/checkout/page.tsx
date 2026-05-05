@@ -122,7 +122,7 @@ export default function CheckoutPage() {
                 {items.map((item) => (
                   <div key={item.productId} className="flex justify-between text-sm">
                     <span>{item.name} x {item.quantity}</span>
-                    <span>${(item.price * item.quantity).toFixed(2)}</span>
+                    <span>${((item?.price || 0) * item.quantity).toFixed(2)}</span>
                   </div>
                 ))}
                 <div className="border-t pt-3">
