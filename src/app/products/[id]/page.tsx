@@ -107,7 +107,7 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
         </button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          <div className="bg-gray-100 rounded-2xl h-110 flex items-center justify-center text-8xl">
+          <div className="bg-gray-100 rounded-2xl h-120 flex items-center justify-center text-8xl">
             {product.image ? (
               <img
                 src={product.image}
