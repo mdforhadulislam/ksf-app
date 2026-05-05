@@ -71,7 +71,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
           <h3 className="font-semibold text-black line-clamp-1">
             {product.name}
           </h3>
-          <span className="text-xl font-bold text-black ml-2">
+          <span className="text-xl font-bold text-black">
             BDT {(product?.price || 0).toFixed(1)}
           </span>
         </div>
