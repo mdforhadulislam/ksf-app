@@ -67,7 +67,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
       </div>
 
       <div className="p-5">
-        <div className="flex flex-col justify-between items-start mb-2">
+        <div className="flex flex-col justify-between items-start mb-1">
           <h3 className="font-semibold text-black line-clamp-1">
             {product.name}
           </h3>
@@ -76,11 +76,11 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
           </span>
         </div>
         
-        <p className="text-gray-600 text-sm line-clamp-2 mb-4">
+        <p className="text-gray-600 text-sm line-clamp-2 mb-3">
           {product.description}
         </p>
 
-        <div className="flex gap-2">
+        <div className="flex gap-1">
           <button
             onClick={handleAddToCart}
             disabled={product.stock === 0}

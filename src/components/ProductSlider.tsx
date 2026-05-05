@@ -13,98 +13,110 @@ export default function ProductSlider({ products }: ProductSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const router = useRouter();
 
-  if (products.length === 0) return null;
-
-  const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? products.length - 1 : prev - 1));
+  const getItemsPerView = () => {
+    if (typeof window === 'undefined') return 4;
+    if (window.innerWidth >= 1024) return 4; // lg
+    if (window.innerWidth >= 768) return 3; // md
+    if (window.innerWidth >= 640) return 2; // sm
+    return 1; // xs
   };
 
-  const goToNext = () => {
-    setCurrentIndex((prev) => (prev === products.length - 1 ? 0 : prev + 1));
+  const [itemsPerView, setItemsPerView] = useState(getItemsPerView());
+
+  // handle resize
+  useState(() => {
+    const handleResize = () => {
+      setItemsPerView(getItemsPerView());
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  });
+
+  const maxIndex = Math.max(0, products.length - itemsPerView);
+
+  const goNext = () => {
+    setCurrentIndex((prev) =>
+      prev + itemsPerView > maxIndex ? 0 : prev + itemsPerView
+    );
   };
 
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index);
+  const goPrev = () => {
+    setCurrentIndex((prev) =>
+      prev - itemsPerView < 0 ? maxIndex : prev - itemsPerView
+    );
   };
 
-  const product = products[currentIndex];
+  const visibleProducts = products.slice(
+    currentIndex,
+    currentIndex + itemsPerView
+  );
 
   return (
-    <div className="relative max-w-2xl mx-auto">
-      {/* Main Card */}
-      <div
-        onClick={() => router.push(`/products/${product.id}`)}
-        className="cursor-pointer bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-neon-green hover:shadow-lg transition-all duration-300"
-      >
-        <div className="relative h-64 overflow-hidden bg-gray-100 flex items-center justify-center text-8xl">
-          {product.image ? (
-            <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-          ) : (
-            '📦'
-          )}
-        </div>
-
-        <div className="p-6">
-          <div className="flex justify-between items-start mb-2">
-            <h3 className="text-xl font-semibold text-black line-clamp-1">
-              {product.name}
-            </h3>
-            <span className="text-2xl font-bold text-black ml-2">
-              BDT {(product.price || 0).toFixed(2)}
-            </span>
-          </div>
-          
-          <p className="text-gray-600 text-sm line-clamp-2 mb-4">
-            {product.description}
-          </p>
-
-          <button
-            onClick={(e) => { 
-              e.stopPropagation();
-              // Add to cart logic
-            }}
-            className="w-full bg-neon-green text-black py-3 rounded-xl hover:bg-neon-green-dark transition font-medium flex items-center justify-center gap-2"
+    <div className="relative max-w-6xl mx-auto">
+      
+      {/* Slider */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {visibleProducts.map((product) => (
+          <div
+            key={product.id}
+            onClick={() => router.push(`/products/${product.id}`)}
+            className="cursor-pointer bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-neon-green hover:shadow-lg transition-all duration-300"
           >
-            <ShoppingCart size={18} />
-            Add to Cart
-          </button>
-        </div>
+            <div className="h-48 bg-gray-100 flex items-center justify-center text-5xl">
+              {product.image ? (
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                '📦'
+              )}
+            </div>
+
+            <div className="p-4">
+              <h3 className="text-lg font-semibold line-clamp-1">
+                {product.name}
+              </h3>
+
+              <p className="text-sm text-gray-500 line-clamp-2 mb-2">
+                {product.description}
+              </p>
+
+              <div className="flex justify-between items-center">
+                <span className="font-bold">
+                  BDT {(product.price || 0).toFixed(2)}
+                </span>
+
+                <button
+                  onClick={(e) => e.stopPropagation()}
+                  className="bg-neon-green p-2 rounded-lg"
+                >
+                  <ShoppingCart size={16} />
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
 
-      {/* Navigation Arrows */}
-      {products.length > 3 && (
+      {/* Arrows */}
+      {products.length > itemsPerView && (
         <>
           <button
-            onClick={goToPrevious}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 bg-white p-3 rounded-full shadow-lg hover:bg-gray-100 transition z-10"
+            onClick={goPrev}
+            className="absolute -left-6 top-1/2 -translate-y-1/2 bg-white shadow p-3 rounded-full"
           >
             ←
           </button>
 
           <button
-            onClick={goToNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 bg-white p-3 rounded-full shadow-lg hover:bg-gray-100 transition z-10"
+            onClick={goNext}
+            className="absolute -right-6 top-1/2 -translate-y-1/2 bg-white shadow p-3 rounded-full"
           >
             →
           </button>
         </>
-      )}
-
-      {/* Dots Indicator */}
-      {products.length > 3 && (
-        <div className="flex justify-center gap-2 mt-6">
-          {products.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === currentIndex 
-                  ? 'bg-neon-green w-8' 
-                  : 'bg-gray-300 hover:bg-gray-400'
-              }`}
-            />
-          ))}
-        </div>
       )}
     </div>
   );
