@@ -7,9 +7,9 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<boolean>;
+  register: (name: string, email: string, password: string) => Promise<boolean>;
   logout: () => void;
   isAdmin: boolean;
-  updateUser: (user: User) => void;
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -32,19 +32,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
-      const res = await fetch('/api/users', { method: 'GET' });
-      const users = await res.json();
-      const found = users.find((u: any) => u.email === email);
-      if (found && found.password === password) {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (res.ok) {
         const userData: User = {
-          uid: found.id,
-          email: found.email,
-          displayName: found.displayName,
-          role: found.role,
-          createdAt: new Date(found.createdAt),
+          uid: data.id,
+          email: data.email,
+          displayName: data.displayName,
+          role: data.role,
         };
         setUser(userData);
         localStorage.setItem('ksf_user', JSON.stringify(userData));
+        return true;
+      }
+      return false;
+    } catch (error) {
+      return false;
+    }
+  };
+
+  const register = async (name: string, email: string, password: string): Promise<boolean> => {
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password }),
+      });
+      const data = await res.json();
+      if (res.ok) {
         return true;
       }
       return false;
@@ -58,15 +77,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem('ksf_user');
   };
 
-  const updateUser = (userData: User) => {
-    setUser(userData);
-    localStorage.setItem('ksf_user', JSON.stringify(userData));
-  };
-
   const isAdmin = user?.role === 'admin';
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, isAdmin, updateUser }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );

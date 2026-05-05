@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { CartItem } from '@/types';
+import { useAuth } from './AuthContext';
 
 interface CartContextType {
   items: CartItem[];
@@ -17,30 +18,35 @@ const CartContext = createContext<CartContextType>({} as CartContextType);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
+  const { user } = useAuth();
 
   useEffect(() => {
-    const savedCart = localStorage.getItem('ksf_cart');
-    if (savedCart) {
-      try {
-        setItems(JSON.parse(savedCart));
-      } catch (e) {
-        localStorage.removeItem('ksf_cart');
-      }
+    if (user) {
+      fetchCart();
+    } else {
+      setItems([]);
     }
-  }, []);
+  }, [user]);
 
-  useEffect(() => {
-    localStorage.setItem('ksf_cart', JSON.stringify(items));
-  }, [items]);
+  const fetchCart = async () => {
+    try {
+      const res = await fetch('/api/users');
+      const users = await res.json();
+      const currentUser = users.find((u: any) => u.id === user?.uid);
+      if (currentUser?.cart) {
+        setItems(currentUser.cart);
+      }
+    } catch (error) {
+      console.error('Failed to fetch cart');
+    }
+  };
 
   const addToCart = (item: CartItem) => {
     setItems((prev) => {
       const existing = prev.find((i) => i.productId === item.productId);
       if (existing) {
         return prev.map((i) =>
-          i.productId === item.productId
-            ? { ...i, quantity: i.quantity + 1 }
-            : i
+          i.productId === item.productId ? { ...i, quantity: i.quantity + 1 } : i
         );
       }
       return [...prev, { ...item, quantity: 1 }];

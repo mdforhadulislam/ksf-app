@@ -5,17 +5,20 @@ import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import { ShoppingCart, User, LogOut } from 'lucide-react';
+import { ShoppingCart, User, LogOut, ChevronDown } from 'lucide-react';
+import { useState } from 'react';
 
 export default function Navbar() {
   const { user, logout, isAdmin } = useAuth();
   const { itemCount } = useCart();
   const router = useRouter();
+  const [showDropdown, setShowDropdown] = useState(false);
 
   const handleLogout = () => {
     logout();
     toast.success('Logged out');
     router.push('/');
+    setShowDropdown(false);
   };
 
   return (
@@ -44,31 +47,53 @@ export default function Navbar() {
                 )}
               </Link>
             )}
-            {isAdmin && (
-              <Link href="/admin" className="text-gray-600 hover:text-black transition text-sm font-medium">
-                Admin
-              </Link>
-            )}
           </div>
 
           <div className="flex items-center gap-3">
             {user ? (
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-gray-600 hidden sm:flex items-center gap-1">
-                  <User size={16} />
-                  {user.displayName}
-                </span>
-                <button 
-                  onClick={handleLogout} 
-                  className="bg-black text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-800 transition flex items-center gap-1"
-                >
-                  <LogOut size={16} />
-                  Logout
+              <div
+                className="relative"
+                onMouseEnter={() => setShowDropdown(true)}
+                onMouseLeave={() => setShowDropdown(false)}
+              >
+                <button className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition">
+                  <div className="w-8 h-8 bg-neon-green/20 rounded-full flex items-center justify-center">
+                    <User size={16} />
+                  </div>
+                  <span className="text-sm text-gray-700 hidden sm:block">
+                    {user.displayName}
+                  </span>
+                  <ChevronDown size={14} className={`text-gray-500 transition-transform ${showDropdown ? 'rotate-180' : ''}`} />
                 </button>
+
+                {showDropdown && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
+                    <div className="px-4 py-2 border-b border-gray-100">
+                      <p className="text-sm font-semibold text-black">{user.displayName}</p>
+                      <p className="text-xs text-gray-500">{user.email}</p>
+                    </div>
+                    {isAdmin && (
+                      <Link
+                        href="/admin"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition"
+                        onClick={() => setShowDropdown(false)}
+                      >
+                        Admin Panel
+                      </Link>
+                    )}
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50 transition flex items-center gap-2"
+                    >
+                      <LogOut size={14} />
+                      Logout
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
-              <Link 
-                href="/login" 
+              <Link
+                href="/login"
                 className="bg-neon-green text-black px-5 py-2 rounded-lg text-sm font-semibold hover:bg-neon-green-dark transition"
               >
                 Login

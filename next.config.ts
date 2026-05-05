@@ -9,6 +9,7 @@ const nextConfig = {
       { protocol: 'http', hostname: 'localhost' },
     ],
   },
-}
+  serverExternalPackages: ['mongodb', 'bcryptjs'],
+};
 
-module.exports = nextConfig;
+export default nextConfig;

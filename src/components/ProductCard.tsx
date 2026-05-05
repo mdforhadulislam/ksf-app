@@ -1,9 +1,6 @@
 'use client';
 
-import Image from 'next/image';
 import { Product } from '@/types';
-import { useCart } from '@/context/CartContext';
-import toast from 'react-hot-toast';
 import { ShoppingCart, Zap } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -13,42 +10,29 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, index = 0 }: ProductCardProps) {
-  const { addToCart } = useCart();
   const router = useRouter();
 
-  const handleAddToCart = () => {
-    addToCart({
-      id: product.id!,
-      productId: product.id!,
-      name: product.name,
-      price: product.price,
-      image: product.image,
-      quantity: 1,
-    });
-    toast.success('Added to cart');
+  const handleClick = () => {
+    router.push(`/products/${product.id}`);
   };
 
-  const handleBuyNow = () => {
-    addToCart({
-      id: product.id!,
-      productId: product.id!,
-      name: product.name,
-      price: product.price,
-      image: product.image,
-      quantity: 1,
-    });
-    router.push('/checkout');
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    // Add to cart logic could go here
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-neon-green hover:shadow-lg transition-all duration-300" style={{ animationDelay: `${index * 0.1}s` }}>
-      <div className="relative h-56 overflow-hidden bg-gray-100">
-        <Image
-          src={product.image || '/images/placeholder.jpg'}
-          alt={product.name}
-          fill
-          className="object-cover hover:scale-105 transition-transform duration-500"
-        />
+    <div 
+      onClick={handleClick}
+      className="cursor-pointer bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-neon-green hover:shadow-lg transition-all duration-300"
+      style={{ animationDelay: `${index * 0.1}s` }}
+    >
+      <div className="relative h-56 overflow-hidden bg-gray-100 flex items-center justify-center text-6xl">
+        {product.image ? (
+          <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+        ) : (
+          '📦'
+        )}
         {product.stock === 0 && (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
             <span className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-medium">
@@ -82,7 +66,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             Add
           </button>
           <button
-            onClick={handleBuyNow}
+            onClick={(e) => { e.stopPropagation(); handleClick(); }}
             disabled={product.stock === 0}
             className="flex-1 bg-white text-black py-2.5 rounded-xl border-2 border-neon-green hover:bg-neon-green hover:text-black transition font-medium text-sm flex items-center justify-center gap-2 disabled:opacity-50"
           >

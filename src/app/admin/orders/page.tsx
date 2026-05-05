@@ -15,7 +15,7 @@ export default function AdminOrders() {
       const res = await fetch('/api/orders');
       const data = await res.json();
       setOrders(data);
-    } catch (error) { toast.error('Failed to fetch'); } 
+    } catch (error) { toast.error('Failed to fetch'); }
     finally { setLoading(false); }
   };
 
@@ -58,8 +58,8 @@ export default function AdminOrders() {
                   <p className="text-gray-600 text-sm">{order.createdAt ? new Date(order.createdAt).toLocaleDateString() : 'N/A'}</p>
                 </div>
                 <div className="flex gap-2">
-                  <select 
-                    value={order.status} 
+                  <select
+                    value={order.status}
                     onChange={(e) => handleStatus(order.id, e.target.value)}
                     className="px-3 py-2 border rounded-lg text-sm"
                   >

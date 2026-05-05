@@ -7,7 +7,6 @@ export interface Product {
   category: string;
   stock: number;
   createdAt?: Date;
-  updatedAt?: Date;
 }
 
 export interface CartItem {
@@ -30,23 +29,15 @@ export interface Order {
     phone: string;
     address: string;
   };
-  paymentMethod: 'cod' | 'card' | 'upi';
+  paymentMethod: string;
   createdAt?: Date;
-  updatedAt?: Date;
 }
 
 export interface User {
-  uid?: string;
+  uid: string;
   email: string;
   displayName: string;
-  role: 'user' | 'admin';
-  phone?: string;
+  role: 'admin' | 'user';
+  password?: string;
   createdAt?: Date;
-  updatedAt?: Date;
-}
-
-export interface Category {
-  id?: string;
-  name: string;
-  image?: string;
 }

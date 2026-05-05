@@ -1,17 +1,16 @@
 'use client';
 
+import { ReactNode } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
-import LoadingSpinner from './LoadingSpinner';
 import { useEffect } from 'react';
 
-export default function ProtectedRoute({
-  children,
-  requireAdmin = false,
-}: {
-  children: React.ReactNode;
+interface ProtectedRouteProps {
+  children: ReactNode;
   requireAdmin?: boolean;
-}) {
+}
+
+export default function ProtectedRoute({ children, requireAdmin = false }: ProtectedRouteProps) {
   const { user, loading, isAdmin } = useAuth();
   const router = useRouter();
 
@@ -22,7 +21,14 @@ export default function ProtectedRoute({
     }
   }, [user, loading, isAdmin, requireAdmin, router]);
 
-  if (loading) return <LoadingSpinner />;
+  if (loading) {
+    return (
+      <div className="py-20 text-center">
+        <div className="w-16 h-16 border-4 border-neon-green border-t-transparent rounded-full animate-spin mx-auto" />
+      </div>
+    );
+  }
+
   if (!user) return null;
   if (requireAdmin && !isAdmin) return null;
 

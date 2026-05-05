@@ -5,7 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import toast from 'react-hot-toast';
-import { Trash2, Plus, Minus, ArrowRight } from 'lucide-react';
+import { Trash2, ArrowRight } from 'lucide-react';
 
 export default function CartPage() {
   const { items, removeFromCart, updateQuantity, total, clearCart } = useCart();
@@ -41,14 +41,13 @@ export default function CartPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-4">
             {items.map((item, index) => (
-              <div key={item.productId} className="bg-white p-4 rounded-2xl flex items-center gap-4" style={{ animationDelay: `${index * 0.1}s` }}>
-                <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
-                  <Image
-                    src={item.image || '/images/placeholder.jpg'}
-                    alt={item.name}
-                    fill
-                    className="object-cover"
-                  />
+              <div key={item.productId} className="bg-white p-4 rounded-2xl flex items-center gap-4">
+                <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0 flex items-center justify-center text-4xl">
+                  {item.image ? (
+                    <Image src={item.image} alt={item.name} fill className="object-cover" />
+                  ) : (
+                    '📦'
+                  )}
                 </div>
 
                 <div className="flex-1">
@@ -57,12 +56,18 @@ export default function CartPage() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <button onClick={() => updateQuantity(item.productId, item.quantity - 1)} className="p-1 hover:bg-gray-100 rounded">
-                    <Minus size={18} />
+                  <button
+                    onClick={() => updateQuantity(item.productId, item.quantity - 1)}
+                    className="p-1 hover:bg-gray-100 rounded"
+                  >
+                    -
                   </button>
                   <span className="w-8 text-center font-semibold">{item.quantity}</span>
-                  <button onClick={() => updateQuantity(item.productId, item.quantity + 1)} className="p-1 hover:bg-gray-100 rounded">
-                    <Plus size={18} />
+                  <button
+                    onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+                    className="p-1 hover:bg-gray-100 rounded"
+                  >
+                    +
                   </button>
                 </div>
 
@@ -78,7 +83,10 @@ export default function CartPage() {
               </div>
             ))}
 
-            <button onClick={() => { clearCart(); toast.success('Cart cleared'); }} className="text-sm text-gray-500 hover:text-red-500">
+            <button
+              onClick={() => { clearCart(); toast.success('Cart cleared'); }}
+              className="text-sm text-gray-500 hover:text-red-500"
+            >
               Clear Cart
             </button>
           </div>

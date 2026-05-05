@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readFile, writeFile } from 'fs/promises';
-import { join } from 'path';
+import { getDatabase } from '@/lib/mongodb';
 
 export async function GET(
   request: NextRequest,
@@ -8,13 +7,14 @@ export async function GET(
 ) {
   try {
     const { id } = await context.params;
-    const data = await readFile(join(process.cwd(), 'data', 'products.json'), 'utf-8');
-    const products = JSON.parse(data);
-    const product = products.find((p: any) => p.id === id || p._id === id);
+    const { ObjectId } = await import('mongodb');
+    const db = await getDatabase();
+    const product = await db.collection('products').findOne({ _id: new ObjectId(id) });
+    
     if (!product) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-    return NextResponse.json(product);
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed' }, { status: 500 });
+    return NextResponse.json({ ...product, id: product._id.toString() });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
 
@@ -24,17 +24,18 @@ export async function PUT(
 ) {
   try {
     const { id } = await context.params;
+    const { ObjectId } = await import('mongodb');
     const body = await request.json();
-    const filePath = join(process.cwd(), 'data', 'products.json');
-    const data = await readFile(filePath, 'utf-8');
-    const products = JSON.parse(data);
-    const index = products.findIndex((p: any) => p.id === id || p._id === id);
-    if (index === -1) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-    products[index] = { ...products[index], ...body, updatedAt: new Date() };
-    await writeFile(filePath, JSON.stringify(products, null, 2));
+    const db = await getDatabase();
+    
+    await db.collection('products').updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { ...body, updatedAt: new Date() } }
+    );
+    
     return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed' }, { status: 500 });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
 
@@ -44,13 +45,12 @@ export async function DELETE(
 ) {
   try {
     const { id } = await context.params;
-    const filePath = join(process.cwd(), 'data', 'products.json');
-    const data = await readFile(filePath, 'utf-8');
-    const products = JSON.parse(data);
-    const filtered = products.filter((p: any) => p.id !== id && p._id !== id);
-    await writeFile(filePath, JSON.stringify(filtered, null, 2));
+    const { ObjectId } = await import('mongodb');
+    const db = await getDatabase();
+    
+    await db.collection('products').deleteOne({ _id: new ObjectId(id) });
     return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed' }, { status: 500 });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

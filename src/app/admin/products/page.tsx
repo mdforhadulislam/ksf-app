@@ -55,8 +55,11 @@ export default function AdminProducts() {
       setFormData({ name: '', price: 0, description: '', image: '', category: '', stock: 0 });
       setImageFile(null);
       fetchProducts();
-    } catch (error) { toast.error('Failed to save'); } 
-    finally { setLoading(false); }
+    } catch (error) {
+      toast.error('Failed to save');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleEdit = (product: any) => {
@@ -87,7 +90,7 @@ export default function AdminProducts() {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-extrabold text-black">Products</h1>
           <button
-            onClick={() => { setEditingProduct(null); setFormData({name: '', price: 0, description: '', image: '', category: '', stock: 0}); setShowModal(true); }}
+            onClick={() => { setEditingProduct(null); setFormData({ name: '', price: 0, description: '', image: '', category: '', stock: 0 }); setShowModal(true); }}
             className="bg-neon-green text-black px-4 py-2 rounded-lg font-semibold flex items-center gap-2 hover:bg-neon-green-dark transition"
           >
             <Plus size={18} /> Add
@@ -109,7 +112,11 @@ export default function AdminProducts() {
               {products.map((product) => (
                 <tr key={product.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4">
-                    <img src={product.image || '/images/placeholder.jpg'} alt={product.name} className="w-12 h-12 rounded object-cover" />
+                    {product.image ? (
+                      <img src={product.image} alt={product.name} className="w-12 h-12 rounded object-cover" />
+                    ) : (
+                      <div className="w-12 h-12 rounded bg-gray-100 flex items-center justify-center">📦</div>
+                    )}
                   </td>
                   <td className="px-6 py-4 font-medium">{product.name}</td>
                   <td className="px-6 py-4 font-bold">${product.price.toFixed(2)}</td>
@@ -138,11 +145,11 @@ export default function AdminProducts() {
                 <button onClick={() => setShowModal(false)}><X size={24} /></button>
               </div>
               <form onSubmit={handleSubmit} className="space-y-4">
-                <input type="text" placeholder="Name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value })} className="w-full px-4 py-3 border border-gray-300 rounded-xl" required />
-                <input type="number" placeholder="Price" value={formData.price} onChange={(e) => setFormData({...formData, price: Number(e.target.value) })} className="w-full px-4 py-3 border border-gray-300 rounded-xl" required />
-                <textarea placeholder="Description" value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value })} className="w-full px-4 py-3 border border-gray-300 rounded-xl" rows={3} required />
-                <input type="text" placeholder="Category" value={formData.category} onChange={(e) => setFormData({...formData, category: e.target.value })} className="w-full px-4 py-3 border border-gray-300 rounded-xl" required />
-                <input type="number" placeholder="Stock" value={formData.stock} onChange={(e) => setFormData({...formData, stock: Number(e.target.value) })} className="w-full px-4 py-3 border border-gray-300 rounded-xl" required />
+                <input type="text" placeholder="Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full px-4 py-3 border border-gray-300 rounded-xl" required />
+                <input type="number" placeholder="Price" value={formData.price} onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })} className="w-full px-4 py-3 border border-gray-300 rounded-xl" required />
+                <textarea placeholder="Description" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} className="w-full px-4 py-3 border border-gray-300 rounded-xl" rows={3} required />
+                <input type="text" placeholder="Category" value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.target.value })} className="w-full px-4 py-3 border border-gray-300 rounded-xl" required />
+                <input type="number" placeholder="Stock" value={formData.stock} onChange={(e) => setFormData({ ...formData, stock: Number(e.target.value) })} className="w-full px-4 py-3 border border-gray-300 rounded-xl" required />
                 <input type="file" accept="image/*" onChange={(e) => setImageFile(e.target.files?.[0] || null)} className="w-full" />
                 {formData.image && !imageFile && <img src={formData.image} alt="Preview" className="w-32 h-32 object-cover rounded" />}
                 <button type="submit" disabled={loading} className="w-full bg-neon-green text-black py-3 rounded-xl font-semibold hover:bg-neon-green-dark transition disabled:opacity-50">

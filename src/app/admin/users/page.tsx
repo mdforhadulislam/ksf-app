@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { Shield, User as UserIcon } from 'lucide-react';
+import { Shield, UserIcon } from 'lucide-react';
 
 export default function AdminUsers() {
   const [users, setUsers] = useState<any[]>([]);
@@ -15,7 +15,7 @@ export default function AdminUsers() {
       const res = await fetch('/api/users');
       const data = await res.json();
       setUsers(data);
-    } catch (error) { toast.error('Failed to fetch'); } 
+    } catch (error) { toast.error('Failed to fetch'); }
     finally { setLoading(false); }
   };
 
@@ -71,11 +71,10 @@ export default function AdminUsers() {
                   <td className="px-6 py-4">
                     <button
                       onClick={() => toggleRole(user.id, user.role)}
-                      className={`px-3 py-1 rounded-lg text-sm font-medium transition ${
-                        user.role === 'admin' 
-                          ? 'bg-gray-200 text-gray-700 hover:bg-gray-300' 
-                          : 'bg-neon-green text-black hover:bg-neon-green-dark'
-                      }`}
+                      className={`px-3 py-1 rounded-lg text-sm font-medium transition ${user.role === 'admin'
+                        ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                        : 'bg-neon-green text-black hover:bg-neon-green-dark'
+                        }`}
                     >
                       {user.role === 'admin' ? 'Remove Admin' : 'Make Admin'}
                     </button>

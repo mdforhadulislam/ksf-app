@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 
 export default function CheckoutPage() {
   const { items, total, clearCart } = useCart();
-  const { user, updateUser } = useAuth();
+  const { user } = useAuth();
   const router = useRouter();
   
   const [formData, setFormData] = useState({
@@ -71,7 +71,7 @@ export default function CheckoutPage() {
           <div className="lg:col-span-2">
             <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 rounded-2xl">
               <h2 className="text-xl font-bold">Shipping Info</h2>
-              
+               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
                 <input
@@ -122,7 +122,7 @@ export default function CheckoutPage() {
                 {items.map((item) => (
                   <div key={item.productId} className="flex justify-between text-sm">
                     <span>{item.name} x {item.quantity}</span>
-                    <span className="font-semibold">${(item.price * item.quantity).toFixed(2)}</span>
+                    <span>${(item.price * item.quantity).toFixed(2)}</span>
                   </div>
                 ))}
                 <div className="border-t pt-3">
