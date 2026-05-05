@@ -128,7 +128,7 @@ export default function CheckoutPage() {
                 <div className="border-t pt-3">
                   <div className="flex justify-between">
                     <span className="text-lg font-bold">Total</span>
-                    <span className="text-lg font-bold text-black">BDT ${total.toFixed(2)}</span>
+                    <span className="text-lg font-bold text-black">BDT {total.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
