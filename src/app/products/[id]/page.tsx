@@ -18,14 +18,8 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
   const { addToCart } = useCart();
   const router = useRouter();
 
-  useEffect(() => {
-    if (params.id) {
-      fetchProduct();
-      fetchRelated();
-    }
-  }, [params.id]);
 
-  const fetchProduct = async () => {
+ const fetchProduct = async () => {
     try {
       const res = await fetch(`/api/products/${params.id}`);
       const data = await res.json();
@@ -48,6 +42,15 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (params.id) {
+      fetchProduct();
+      fetchRelated();
+    }
+  }, [params.id]);
+
+ 
 
   const handleAddToCart = () => {
     if (product) {
