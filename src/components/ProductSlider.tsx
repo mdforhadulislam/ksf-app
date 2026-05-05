@@ -55,7 +55,7 @@ export default function ProductSlider({ products }: ProductSliderProps) {
     <div className="relative max-w-6xl mx-auto">
       
       {/* Slider */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         {visibleProducts.map((product) => (
           <div
             key={product.id}

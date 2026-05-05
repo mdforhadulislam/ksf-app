@@ -68,10 +68,10 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
 
       <div className="p-5">
         <div className="flex flex-col justify-between items-start mb-1">
-          <h3 className="font-semibold text-black line-clamp-1">
+          <h3 className="font-semibold text-lg text-black line-clamp-1">
             {product.name}
           </h3>
-          <span className="text-xl font-bold text-black">
+          <span className="text-lg font-bold text-black">
             BDT {(product?.price || 0).toFixed(1)}
           </span>
         </div>

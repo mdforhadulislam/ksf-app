@@ -48,6 +48,8 @@ export const metadata: Metadata = {
     follow: true,
   },
 };
+import Footer from '@/components/Footer';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -60,6 +62,7 @@ export default function RootLayout({
           <CartProvider>
             <Navbar />
             <main className="min-h-screen">{children}</main>
+            <Footer />
             <Toaster position="top-right" />
           </CartProvider>
         </AuthProvider>
