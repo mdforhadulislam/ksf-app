@@ -72,7 +72,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             {product.name}
           </h3>
           <span className="text-xl font-bold text-black ml-2">
-            ${(product?.price || 0).toFixed(2)}
+            BDT {(product?.price || 0).toFixed(2)}
           </span>
         </div>
         

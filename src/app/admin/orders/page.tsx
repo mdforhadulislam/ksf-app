@@ -33,7 +33,7 @@ export default function AdminOrders() {
 
   const generateInvoice = (order: any) => {
     const dateStr = order.createdAt ? new Date(order.createdAt).toLocaleDateString() : 'N/A';
-    const content = `INVOICE\nOrder: ${order.id}\nDate: ${dateStr}\n\nCustomer: ${order.shippingInfo?.name}\nPhone: ${order.shippingInfo?.phone}\nAddress: ${order.shippingInfo?.address}\n\nItems:\n${order.items?.map((i: any) => `${i.name} x ${i.quantity} - $${(i.price * i.quantity).toFixed(2)}`).join('\n')}\n\nTotal: $${order.total?.toFixed(2)}\nPayment: ${order.paymentMethod}\nStatus: ${order.status}`;
+    const content = `INVOICE\nOrder: ${order.id}\nDate: ${dateStr}\n\nCustomer: ${order.shippingInfo?.name}\nPhone: ${order.shippingInfo?.phone}\nAddress: ${order.shippingInfo?.address}\n\nItems:\n${order.items?.map((i: any) => `${i.name} x ${i.quantity} - BDT ${(i.price * i.quantity).toFixed(2)}`).join('\n')}\n\nTotal: BDT ${order.total?.toFixed(2)}\nPayment: ${order.paymentMethod}\nStatus: ${order.status}`;
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -80,12 +80,12 @@ export default function AdminOrders() {
                 {order.items?.map((item: any) => (
                   <div key={item.productId} className="flex justify-between py-1 text-sm">
                     <span>{item.name} x {item.quantity}</span>
-                    <span>${(item.price * item.quantity).toFixed(2)}</span>
+                    <span>BDT {(item.price * item.quantity).toFixed(2)}</span>
                   </div>
                 ))}
                 <div className="border-t mt-2 pt-2 flex justify-between font-bold">
                   <span>Total:</span>
-                  <span className="text-black">${order.total?.toFixed(2)}</span>
+                  <span className="text-black">BDT {order.total?.toFixed(2)}</span>
                 </div>
               </div>
 

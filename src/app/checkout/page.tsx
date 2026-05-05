@@ -110,7 +110,7 @@ export default function CheckoutPage() {
                 disabled={loading}
                 className="w-full bg-neon-green text-black py-3 rounded-xl font-semibold hover:bg-neon-green-dark transition disabled:opacity-50"
               >
-                {loading ? 'Placing Order...' : `Place Order - $${total.toFixed(2)}`}
+                {loading ? 'Placing Order...' : `Place Order - BDT ${total.toFixed(2)}`}
               </button>
             </form>
           </div>
@@ -122,13 +122,13 @@ export default function CheckoutPage() {
                 {items.map((item) => (
                   <div key={item.productId} className="flex justify-between text-sm">
                     <span>{item.name} x {item.quantity}</span>
-                    <span>${((item?.price || 0) * item.quantity).toFixed(2)}</span>
+                    <span>BDT ${((item?.price || 0) * item.quantity).toFixed(2)}</span>
                   </div>
                 ))}
                 <div className="border-t pt-3">
                   <div className="flex justify-between">
                     <span className="text-lg font-bold">Total</span>
-                    <span className="text-lg font-bold text-black">${total.toFixed(2)}</span>
+                    <span className="text-lg font-bold text-black">BDT ${total.toFixed(2)}</span>
                   </div>
                 </div>
               </div>

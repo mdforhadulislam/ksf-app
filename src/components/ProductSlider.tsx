@@ -55,7 +55,7 @@ export default function ProductSlider({ products }: ProductSliderProps) {
               </h3>
               <div className="flex justify-between items-center">
                 <span className="text-xl font-bold text-black">
-                  ${product.price.toFixed(2)}
+                  BDT {product.price.toFixed(2)}
                 </span>
                 <button 
                   onClick={(e) => { e.stopPropagation(); }}

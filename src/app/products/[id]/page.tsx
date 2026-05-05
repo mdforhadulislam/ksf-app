@@ -128,7 +128,7 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
             </div>
 
             <p className="text-5xl font-bold text-black">
-              ${((product?.price || 0)).toFixed(2)}
+              BDT ${((product?.price || 0)).toFixed(2)}
             </p>
 
             <p className="text-gray-700 leading-relaxed">
