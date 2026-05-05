@@ -80,7 +80,7 @@ export default function AdminDashboard() {
               <h3 className="text-gray-600">Revenue</h3>
               <DollarSign className="text-yellow-600" size={24} />
             </div>
-            <p className="text-3xl font-bold">BDT ${stats.revenue.toFixed(2)}</p>
+            <p className="text-3xl font-bold">BDT {stats.revenue.toFixed(2)}</p>
           </div>
         </div>
 
