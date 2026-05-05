@@ -72,7 +72,7 @@ export default function ProductSlider({ products }: ProductSliderProps) {
       </div>
 
       {/* Navigation Arrows */}
-      {products.length > 1 && (
+      {products.length > 3 && (
         <>
           <button
             onClick={goToPrevious}
@@ -91,7 +91,7 @@ export default function ProductSlider({ products }: ProductSliderProps) {
       )}
 
       {/* Dots Indicator */}
-      {products.length > 1 && (
+      {products.length > 3 && (
         <div className="flex justify-center gap-2 mt-6">
           {products.map((_, index) => (
             <button
