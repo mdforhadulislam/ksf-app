@@ -51,7 +51,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
       className="cursor-pointer bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-neon-green hover:shadow-lg transition-all duration-300"
       style={{ animationDelay: `${index * 0.1}s` }}
     >
-      <div className="relative h-56 overflow-hidden bg-gray-100 flex items-center justify-center text-6xl">
+      <div className="relative h-60 overflow-hidden bg-gray-100 flex items-center justify-center text-6xl">
         {product.image ? (
           <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
         ) : (
@@ -67,12 +67,12 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
       </div>
 
       <div className="p-5">
-        <div className="flex justify-between items-start mb-2">
+        <div className="flex flex-col justify-between items-start mb-2">
           <h3 className="font-semibold text-black line-clamp-1">
             {product.name}
           </h3>
           <span className="text-xl font-bold text-black ml-2">
-            BDT {(product?.price || 0).toFixed(2)}
+            BDT {(product?.price || 0).toFixed(1)}
           </span>
         </div>
         
