@@ -9,7 +9,7 @@ export default function ProductsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://ksf-app.onrender.com/api/products')
+    fetch('/api/products')
       .then(res => res.json())
       .then(data => {
         setProducts(data);
@@ -30,7 +30,7 @@ export default function ProductsPage() {
         {loading ? (
           <LoadingSpinner />
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
             {products.map((product, index) => (
               <ProductCard key={product.id} product={product} index={index} />
             ))}
