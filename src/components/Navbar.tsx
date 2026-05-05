@@ -36,20 +36,22 @@ export default function Navbar() {
             <Link href="/products" className="text-gray-600 hover:text-black transition text-sm font-medium">
               Products
             </Link>
-            {user && (
+         
+          </div>
+
+          <div className="flex items-center gap-2">
+   {user && (
               <Link href="/cart" className="text-gray-600 hover:text-black transition relative text-sm font-medium flex items-center gap-1">
                 <ShoppingCart size={18} />
-                Cart
+               
                 {itemCount > 0 && (
                   <span className="absolute -top-2 -right-4 bg-neon-green text-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                     {itemCount}
                   </span>
                 )}
               </Link>
-            )}
-          </div>
+             )} 
 
-          <div className="flex items-center gap-3">
             {user ? (
               <div
                 className="relative"
@@ -91,14 +93,14 @@ export default function Navbar() {
                   </div>
                 )}
               </div>
-            ) : (
+             ) : (
               <Link
                 href="/login"
                 className="bg-neon-green text-black px-5 py-2 rounded-lg text-sm font-semibold hover:bg-neon-green-dark transition"
               >
                 Login
               </Link>
-            )}
+            )} 
           </div>
         </div>
       </div>
