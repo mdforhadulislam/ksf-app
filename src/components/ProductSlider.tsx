@@ -52,7 +52,7 @@ export default function ProductSlider({ products }: ProductSliderProps) {
   );
 
   return (
-    <div className="relative max-w-6xl mx-auto">
+    <div className="relative  mx-auto">
       
       {/* Slider */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -105,14 +105,14 @@ export default function ProductSlider({ products }: ProductSliderProps) {
         <>
           <button
             onClick={goPrev}
-            className="absolute -left-6 top-1/2 -translate-y-1/2 bg-white shadow p-3 rounded-full"
+            className="absolute -left-8 top-1/2 -translate-y-1/2 bg-white shadow p-3 rounded-full"
           >
             ←
           </button>
 
           <button
             onClick={goNext}
-            className="absolute -right-6 top-1/2 -translate-y-1/2 bg-white shadow p-3 rounded-full"
+            className="absolute -right-8 top-1/2 -translate-y-1/2 bg-white shadow p-3 rounded-full"
           >
             →
           </button>
