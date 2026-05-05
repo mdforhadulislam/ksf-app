@@ -1,37 +1,44 @@
-'use client';
+import Link from "next/link";
 
-import Link from 'next/link';
-import { Home, ArrowLeft } from 'lucide-react';
-
-export default function NotFoundPage() {
+export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white px-4">
-      <div className="text-center space-y-8 animate-fade-in">
-        <div className="space-y-4">
-          <h1 className="text-9xl font-extrabold text-black">
-            4<span className="text-neon-green">0</span>4
-          </h1>
-          <h2 className="text-3xl font-bold text-gray-900">Page Not Found</h2>
-          <p className="text-gray-600 max-w-md mx-auto">
-            The page you're looking for doesn't exist or has been moved.
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-gray-50 px-4">
+      <div className="text-center space-y-8">
+        {/* 404 Text */}
+        <h1 className="text-7xl font-extrabold text-black tracking-tight">
+          4<span className="text-neon-green">0</span>4
+        </h1>
+
+        {/* Message */}
+        <div className="space-y-2">
+          <h2 className="text-2xl font-bold text-gray-800">Page not found</h2>
+          <p className="text-gray-500">
+            Sorry, the page you are looking for doesn’t exist or has been moved.
           </p>
         </div>
 
-        <div className="flex items-center justify-center gap-4">
-          <button
-            onClick={() => window.history.back()}
-            className="flex items-center gap-2 px-6 py-3 border-2 border-gray-300 rounded-xl font-semibold hover:border-black transition"
-          >
-            <ArrowLeft size={20} />
-            Go Back
-          </button>
+        {/* Action Buttons */}
+        <div className="flex items-center justify-center gap-4 flex-wrap">
           <Link
             href="/"
-            className="flex items-center gap-2 bg-neon-green text-black px-6 py-3 rounded-xl font-semibold hover:bg-neon-green-dark transition"
+            className="bg-neon-green text-black px-6 py-3 rounded-xl font-semibold hover:bg-neon-green-dark transition"
           >
-            <Home size={20} />
-            Home
+            Go Home
           </Link>
+
+          <Link
+            href="/products"
+            className="border border-gray-300 px-6 py-3 rounded-xl font-semibold text-gray-700 hover:bg-gray-100 transition"
+          >
+            Browse Products
+          </Link>
+        </div>
+
+        {/* Subtle Animation Dot */}
+        <div className="flex justify-center gap-2 pt-4">
+          <span className="w-2 h-2 bg-neon-green rounded-full animate-bounce"></span>
+          <span className="w-2 h-2 bg-neon-green rounded-full animate-bounce [animation-delay:0.15s]"></span>
+          <span className="w-2 h-2 bg-neon-green rounded-full animate-bounce [animation-delay:0.3s]"></span>
         </div>
       </div>
     </div>
