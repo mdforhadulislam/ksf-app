@@ -87,7 +87,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             className="flex-1 bg-neon-green text-black py-2.5 rounded-xl hover:bg-neon-green-dark transition font-medium text-sm flex items-center justify-center gap-2 disabled:opacity-50"
           >
             <ShoppingCart size={16} />
-            Add
+            Add To Cart
           </button>
           <button
             onClick={handleBuyNow}
@@ -95,7 +95,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             className="flex-1 bg-white text-black py-2.5 rounded-xl border-2 border-neon-green hover:bg-neon-green hover:text-black transition font-medium text-sm flex items-center justify-center gap-2 disabled:opacity-50"
           >
             <Zap size={16} />
-            Buy
+            Buy Now
           </button>
         </div>
       </div>

@@ -20,15 +20,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const { user } = useAuth();
 
-  useEffect(() => {
-    if (user) {
-      fetchCart();
-    } else {
-      setItems([]);
-    }
-  }, [user]);
 
-  const fetchCart = async () => {
+   const fetchCart = async () => {
     try {
       const res = await fetch('/api/users');
       const users = await res.json();
@@ -40,6 +33,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       console.error('Failed to fetch cart');
     }
   };
+  
+  useEffect(() => {
+    if (user) {
+      fetchCart();
+    } else {
+      setItems([]);
+    }
+  }, [user]);
+
+ 
 
   const addToCart = (item: CartItem) => {
     setItems((prev) => {

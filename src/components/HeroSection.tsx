@@ -29,7 +29,7 @@ export default function HeroSection() {
   const slide = slides[currentSlide];
 
   return (
-    <div className="relative h-[500px] overflow-hidden bg-gray-50">
+    <div className="relative h-[500px] overflow-hidden bg-gray-50 border-b border-gray-200">
       <div className="relative z-10 flex items-center justify-center h-full">
         <div className="text-center px-4 animate-fade-in">
           <h1 className="text-5xl md:text-7xl font-extrabold text-black mb-4">

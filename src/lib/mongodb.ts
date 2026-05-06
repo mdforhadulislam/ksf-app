@@ -1,6 +1,6 @@
 import { MongoClient, Db } from 'mongodb';
 
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/ksf-store';
+const uri = process.env.MONGODB_URI || 'mongodb+srv://mdforhadul44_db_user:ZzRp8BTOHm91lfq9@ksf.9ewcyyw.mongodb.net/?appName=ksf';
 
 let cachedClient: MongoClient | null = null;
 let cachedDb: Db | null = null;

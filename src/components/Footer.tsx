@@ -55,11 +55,11 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center gap-2 text-sm text-gray-400">
                 <Mail size={16} />
-                <span>support@ksf.com</span>
+                <span>ksfhomedecor@gmail.com</span>
               </li>
               <li className="flex items-center gap-2 text-sm text-gray-400">
                 <Phone size={16} />
-                <span>+880 123 456 7890</span>
+                <span>+8801818779059</span>
               </li>
               <li className="flex items-center gap-2 text-sm text-gray-400">
                 <MapPin size={16} />
