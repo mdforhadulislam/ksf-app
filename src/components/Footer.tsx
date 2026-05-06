@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <footer className="bg-black text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Brand */}
           <div className="space-y-4">
             <h3 className="text-2xl font-extrabold">
@@ -68,23 +68,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Newsletter */}
-          <div>
-            <h4 className="text-lg font-bold mb-4">Newsletter</h4>
-            <p className="text-gray-400 text-sm mb-4">
-              Subscribe to get updates on new products and exclusive offers.
-            </p>
-            <div className="flex gap-2">
-              <input
-                type="email"
-                placeholder="Your email"
-                className="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm focus:outline-none focus:border-neon-green"
-              />
-              <button className="bg-neon-green text-black px-4 py-2 rounded-lg text-sm font-semibold hover:bg-neon-green-dark transition">
-                Subscribe
-              </button>
-            </div>
-          </div>
         </div>
 
         {/* Bottom Bar */}

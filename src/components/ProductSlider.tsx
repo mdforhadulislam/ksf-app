@@ -105,14 +105,14 @@ export default function ProductSlider({ products }: ProductSliderProps) {
         <>
           <button
             onClick={goPrev}
-            className="absolute -left-8 top-1/2 -translate-y-1/2 bg-white shadow p-3 rounded-full"
+            className="absolute -left-3 top-1/2 -translate-y-1/2 bg-white shadow p-3 rounded-full"
           >
             ←
           </button>
 
           <button
             onClick={goNext}
-            className="absolute -right-8 top-1/2 -translate-y-1/2 bg-white shadow p-3 rounded-full"
+            className="absolute -right-3 top-1/2 -translate-y-1/2 bg-white shadow p-3 rounded-full"
           >
             →
           </button>
