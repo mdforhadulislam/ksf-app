@@ -10,11 +10,7 @@ export default function Home() {
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchFeaturedProducts();
-    fetchCategories();
-  }, []);
-
+  
   const fetchFeaturedProducts = async () => {
     try {
       const res = await fetch('/api/products');
@@ -30,6 +26,13 @@ export default function Home() {
       setCategories(data.slice(0, 4));
     } catch (error) { console.error('Failed to fetch categories'); }
   };
+
+
+  useEffect(() => {
+    fetchFeaturedProducts();
+    fetchCategories();
+  }, []);
+
 
   return (
     <div>
