@@ -139,8 +139,9 @@ export default function AdminProducts() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Image</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Discount</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Discount</th>
+                
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stock</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
               </tr>
