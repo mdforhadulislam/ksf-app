@@ -15,6 +15,7 @@ export default function Home() {
       const res = await fetch("/api/products");
       const data = await res.json();
       setFeaturedProducts(data.slice(0, 8));
+      setLoading(false)
     } catch (error) {
       console.error("Error fetching products:", error);
     }
