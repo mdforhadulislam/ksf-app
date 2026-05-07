@@ -23,7 +23,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
    const fetchCart = async () => {
     try {
-      const res = await fetch(`${process.env.API_URL}/api/users`);
+      const res = await fetch('/api/users');
       const users = await res.json();
       const currentUser = users.find((u: any) => u.id === user?.uid);
       if (currentUser?.cart) {

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import ProductSlider from "@/components/ProductSlider";
-import { useCart } from "@/context/CartContext";
-import { ArrowLeft, ShoppingCart, Zap } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { use, useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { useEffect, useState, use } from 'react';
+import { useRouter } from 'next/navigation';
+import ProductSlider from '@/components/ProductSlider';
+import { useCart } from '@/context/CartContext';
+import toast from 'react-hot-toast';
+import { ShoppingCart, Zap, ArrowLeft } from 'lucide-react';
 
 interface ProductDetailsProps {
   params: Promise<{ id: string }>; // ✅ Promise
@@ -22,23 +22,23 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
 
   const fetchProduct = async () => {
     try {
-      const res = await fetch(`${process.env.API_URL}/api/products/${id}`);
+      const res = await fetch(`/api/products/${id}`);
       const data = await res.json();
       if (res.ok) {
         setProduct(data);
       }
     } catch (error) {
-      console.error("Failed to fetch product");
+      console.error('Failed to fetch product');
     }
   };
 
   const fetchRelated = async () => {
     try {
-      const res = await fetch(`${process.env.API_URL}/api/products`);
+      const res = await fetch('/api/products');
       const data = await res.json();
       setRelated(data.filter((p: any) => p.id !== id).slice(0, 4));
     } catch (error) {
-      console.error("Failed to fetch related");
+      console.error('Failed to fetch related');
     } finally {
       setLoading(false);
     }
@@ -61,7 +61,7 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
         image: product.image,
         quantity: 1,
       });
-      toast.success("Added to cart");
+      toast.success('Added to cart');
     }
   };
 
@@ -75,7 +75,7 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
         image: product.image,
         quantity: 1,
       });
-      router.push("/checkout");
+      router.push('/checkout');
     }
   };
 
@@ -99,7 +99,7 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
     <div className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <button
-          onClick={() => router.push("/products")}
+          onClick={() => router.push('/products')}
           className="flex items-center gap-2 text-gray-600 hover:text-black mb-8 transition"
         >
           <ArrowLeft size={20} />
@@ -115,7 +115,7 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
                 className="w-full h-full object-cover rounded-2xl"
               />
             ) : (
-              "🎧"
+              '🎧'
             )}
           </div>
 
@@ -128,7 +128,7 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
             </div>
 
             <p className="text-2xl font-bold text-black">
-              BDT {(product?.price || 0).toFixed(2)}
+              BDT {((product?.price || 0)).toFixed(2)}
             </p>
 
             <p className="text-gray-700 leading-relaxed">
@@ -139,13 +139,13 @@ export default function ProductDetailsPage({ params }: ProductDetailsProps) {
               <span
                 className={`px-3 py-1 rounded-full text-sm font-medium ${
                   product.stock > 0
-                    ? "bg-green-100 text-green-700"
-                    : "bg-red-100 text-red-700"
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-red-100 text-red-700'
                 }`}
               >
                 {product.stock > 0
                   ? `In Stock (${product.stock})`
-                  : "Out of Stock"}
+                  : 'Out of Stock'}
               </span>
             </div>
 

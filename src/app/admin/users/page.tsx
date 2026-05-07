@@ -12,7 +12,7 @@ export default function AdminUsers() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch(`${process.env.API_URL}/api/users`);
+      const res = await fetch('/api/users');
       const data = await res.json();
       setUsers(data);
     } catch (error) { toast.error('Failed to fetch'); }
@@ -22,7 +22,7 @@ export default function AdminUsers() {
   const toggleRole = async (id: string, currentRole: string) => {
     const newRole = currentRole === 'admin' ? 'user' : 'admin';
     try {
-      await fetch(`${process.env.API_URL}/api/users`, {
+      await fetch('/api/users', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, role: newRole }),

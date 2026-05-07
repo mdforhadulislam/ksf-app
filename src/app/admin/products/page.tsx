@@ -28,7 +28,7 @@ export default function AdminProducts() {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch(`${process.env.API_URL}/api/products`);
+      const res = await fetch('/api/products');
       const data = await res.json();
       setProducts(data);
     } catch (error) { toast.error('Failed to fetch'); }
@@ -36,7 +36,7 @@ export default function AdminProducts() {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch(`${process.env.API_URL}/api/categories`);
+      const res = await fetch('/api/categories');
       const data = await res.json();
       setCategories(data);
     } catch (error) { console.error('Failed to fetch categories'); }
@@ -50,20 +50,20 @@ export default function AdminProducts() {
       if (imageFile) {
         const uploadData = new FormData();
         uploadData.append('file', imageFile);
-        const uploadRes = await fetch(`${process.env.API_URL}/api/upload`, { method: 'POST', body: uploadData });
+        const uploadRes = await fetch('/api/upload', { method: 'POST', body: uploadData });
         const uploadResult = await uploadRes.json();
         imageUrl = uploadResult.url;
       }
 
       if (editingProduct) {
-        await fetch(`${process.env.API_URL}/api/products/${editingProduct.id}`, {
+        await fetch(`/api/products/${editingProduct.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ ...formData, image: imageUrl }),
         });
         toast.success('Updated!');
       } else {
-        await fetch(`${process.env.API_URL}/api/products`, {
+        await fetch('/api/products', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ ...formData, image: imageUrl }),
@@ -99,7 +99,7 @@ export default function AdminProducts() {
   const handleDelete = async (id: string) => {
     if (!confirm('Delete this product?')) return;
     try {
-      await fetch(`${process.env.API_URL}/api/products/${id}`, { method: 'DELETE' });
+      await fetch(`/api/products/${id}`, { method: 'DELETE' });
       toast.success('Deleted!');
       fetchProducts();
     } catch (error) { toast.error('Failed to delete'); }

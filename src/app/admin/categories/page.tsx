@@ -15,7 +15,7 @@ export default function AdminCategories() {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch(`${process.env.API_URL}/api/categories`);
+      const res = await fetch(`/api/categories`);
       const data = await res.json();
       setCategories(data);
     } catch (error) { toast.error('Failed to fetch'); }
@@ -26,14 +26,14 @@ export default function AdminCategories() {
     setLoading(true);
     try {
       if (editingCategory) {
-        await fetch(`${process.env.API_URL}/api/categories/${editingCategory.id}`, {
+        await fetch(`/api/categories/${editingCategory.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData),
         });
         toast.success('Updated!');
       } else {
-        await fetch(`${process.env.API_URL}/api/categories`, {
+        await fetch('/api/categories', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData),
@@ -64,7 +64,7 @@ export default function AdminCategories() {
   const handleDelete = async (id: string) => {
     if (!confirm('Delete this category?')) return;
     try {
-      await fetch(`${process.env.API_URL}/api/categories/${id}`, { method: 'DELETE' });
+      await fetch(`/api/categories/${id}`, { method: 'DELETE' });
       toast.success('Deleted!');
       fetchCategories();
     } catch (error) { toast.error('Failed to delete'); }

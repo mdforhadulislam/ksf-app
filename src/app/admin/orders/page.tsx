@@ -10,9 +10,13 @@ export default function AdminOrders() {
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
   const fetchOrders = async () => {
     try {
-      const res = await fetch(`${process.env.API_URL}/api/orders`);
+      const res = await fetch('/api/orders');
       const data = await res.json();
       setOrders(data);
     } catch {
@@ -22,15 +26,9 @@ export default function AdminOrders() {
     }
   };
 
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
-
-
   const handleStatus = async (id: string, status: string) => {
     try {
-      await fetch(`${process.env.API_URL}/api/orders`, {
+      await fetch('/api/orders', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, status }),
