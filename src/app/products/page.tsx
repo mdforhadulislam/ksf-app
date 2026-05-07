@@ -10,11 +10,7 @@ export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [priceRange, setPriceRange] = useState('');
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchProducts();
-    fetchCategories();
-  }, []);
+  
 
   const fetchProducts = async () => {
     try {
@@ -48,6 +44,13 @@ export default function ProductsPage() {
     }
     return true;
   });
+
+
+  useEffect(() => {
+    fetchProducts();
+    fetchCategories();
+  }, []);
+
 
   return (
     <div className="py-20">

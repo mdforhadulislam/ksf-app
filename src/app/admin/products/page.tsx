@@ -21,11 +21,7 @@ export default function AdminProducts() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchProducts();
-    fetchCategories();
-  }, []);
-
+  
   const fetchProducts = async () => {
     try {
       const res = await fetch('/api/products');
@@ -41,6 +37,13 @@ export default function AdminProducts() {
       setCategories(data);
     } catch (error) { console.error('Failed to fetch categories'); }
   };
+
+
+  useEffect(() => {
+    fetchProducts();
+    fetchCategories();
+  }, []);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
