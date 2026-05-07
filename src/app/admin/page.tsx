@@ -18,9 +18,9 @@ export default function AdminDashboard() {
     const fetchStats = async () => {
       try {
         const [productsRes, ordersRes, usersRes] = await Promise.all([
-          fetch('/api/products'),
-          fetch('/api/orders'),
-          fetch('/api/users'),
+          fetch(`${process.env.API_URL}/api/products`),
+          fetch(`${process.env.API_URL}/api/orders`),
+          fetch(`${process.env.API_URL}/api/users`),
         ]);
         const [products, orders, users] = await Promise.all([
           productsRes.json(),
@@ -84,7 +84,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <Link
             href="/admin/products"
             className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition group"
@@ -93,6 +93,16 @@ export default function AdminDashboard() {
               Manage Products
             </h3>
             <p className="text-gray-600">Add, edit, or delete products</p>
+          </Link>
+
+          <Link
+            href="/admin/categories"
+            className="bg-white p-6 rounded-lg shadow hover:shadow-lg transition group"
+          >
+            <h3 className="text-xl font-semibold mb-2 group-hover:text-indigo-600 transition">
+              Manage Categories
+            </h3>
+            <p className="text-gray-600">Add, edit, or delete categories</p>
           </Link>
 
           <Link

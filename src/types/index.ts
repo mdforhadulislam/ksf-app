@@ -33,6 +33,14 @@ export interface Order {
   createdAt?: Date;
 }
 
+export interface Category {
+  id?: string;
+  name: string;
+  description?: string;
+  image?: string;
+  createdAt?: Date;
+}
+
 export interface User {
   uid: string;
   email: string;

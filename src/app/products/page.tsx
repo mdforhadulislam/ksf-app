@@ -9,7 +9,7 @@ export default function ProductsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/products')
+    fetch(`${process.env.API_URL}/api/products`)
       .then(res => res.json())
       .then(data => {
         setProducts(data);
