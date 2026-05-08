@@ -1,20 +1,17 @@
-'use client';
+"use client";
 
-import { Product } from '@/types';
-import { ShoppingCart, Zap, BadgePercent } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useCart } from '@/context/CartContext';
-import toast from 'react-hot-toast';
+import { useCart } from "@/context/CartContext";
+import { Product } from "@/types";
+import { BadgePercent, ShoppingCart, Zap } from "lucide-react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface ProductCardProps {
   product: Product;
   index?: number;
 }
 
-export default function ProductCard({
-  product,
-  index = 0,
-}: ProductCardProps) {
+export default function ProductCard({ product, index = 0 }: ProductCardProps) {
   const router = useRouter();
   const { addToCart } = useCart();
 
@@ -34,7 +31,7 @@ export default function ProductCard({
       quantity: 1,
     });
 
-    toast.success('Added to cart');
+    toast.success("Added to cart");
   };
 
   const handleBuyNow = (e: React.MouseEvent) => {
@@ -49,15 +46,13 @@ export default function ProductCard({
       quantity: 1,
     });
 
-    router.push('/checkout');
+    router.push("/checkout");
   };
 
-  const hasDiscount =
-    product.discountPercent &&
-    product.discountPercent > 0;
+  const hasDiscount = product.discountPercent && product.discountPercent > 0;
 
   const originalPrice = hasDiscount
-    ? product.price / (1 - product.discountPercent / 100)
+    ? product.price / (1 - (product.discountPercent || 0) / 100)
     : product.price;
 
   return (
@@ -68,7 +63,6 @@ export default function ProductCard({
     >
       {/* Product Image */}
       <div className="relative h-60 overflow-hidden bg-gray-100 flex items-center justify-center text-6xl">
-        
         {/* Discount Badge */}
         {hasDiscount && (
           <div className="absolute top-3 left-3 z-10 bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1 shadow-md">
@@ -84,7 +78,7 @@ export default function ProductCard({
             className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
           />
         ) : (
-          '📦'
+          "📦"
         )}
 
         {/* Out Of Stock Overlay */}
@@ -99,7 +93,6 @@ export default function ProductCard({
 
       {/* Content */}
       <div className="p-5">
-        
         {/* Product Name */}
         <div className="mb-2">
           <h3 className="font-bold text-lg text-black line-clamp-1">
