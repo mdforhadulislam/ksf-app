@@ -165,8 +165,8 @@ const getDisplayWithOutDiscountPrice = (product: any) => {
                   <td className="px-6 py-4 font-bold">
                     {product.discountPercent && product.discountPercent > 0 ? (
                       <div>
-                        <span className="text-sm text-gray-400 line-through">BDT {product.price.toFixed(2)}</span>
-                        <div className="text-black">BDT {getDisplayWithOutDiscountPrice(product).toFixed(2)}</div>
+                        <span className="text-sm text-gray-400 line-through">BDT {getDisplayWithOutDiscountPrice(product).toFixed(2)}</span>
+                        <div className="text-black">BDT {product.price.toFixed(2)}</div>
                       </div>
                     ) : (
                       <span>BDT {product.price.toFixed(2)}</span>
