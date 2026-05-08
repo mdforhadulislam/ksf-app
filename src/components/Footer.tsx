@@ -10,8 +10,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Brand */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-extrabold">
-              K<span className="text-neon-green">S</span>F
+            <h3 className="text-2xl font-extrabold"> 
+              <img src="/logo.png" alt="KSF Logo" className="h-35 inline-block " />  
             </h3>
             <p className="text-gray-400 text-sm leading-relaxed">
               Your modern e-commerce destination for premium products with fast delivery and excellent service.
