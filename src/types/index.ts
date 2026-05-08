@@ -7,6 +7,8 @@ export interface Product {
   category: string;
   stock: number;
   createdAt?: Date;
+
+  discountPercent?: number;
 }
 
 export interface CartItem {
