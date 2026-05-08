@@ -11,7 +11,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <h3 className="text-2xl font-extrabold"> 
-              <img src="/logo.png" alt="KSF Logo" className="h-35 inline-block " />  
+              <img src="/logo.jpeg" alt="KSF Logo" className="h-35 inline-block " />  
             </h3>
             <p className="text-gray-400 text-sm leading-relaxed">
               Your modern e-commerce destination for premium products with fast delivery and excellent service.

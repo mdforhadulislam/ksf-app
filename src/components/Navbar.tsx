@@ -42,7 +42,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="text-2xl font-extrabold text-black"> 
-            <img src="/logo.png" alt="KSF Logo" className="h-22 inline-block" />
+            <img src="/logo.jpeg" alt="KSF Logo" className="h-22 inline-block" />
           </Link>
 
           {/* Desktop Menu */}
