@@ -107,13 +107,18 @@ export default function AdminProducts() {
       fetchProducts();
     } catch (error) { toast.error('Failed to delete'); }
   };
+const getDisplayWithOutDiscountPrice = (product: any) => {
+  if (
+    product.discountPercent &&
+    product.discountPercent > 0
+  ) {
+    return (
+      product.price + (product.price * product.discountPercent) / 100
+    );
+  }
 
-  const getDisplayPrice = (product: any) => {
-    if (product.discountPercent && product.discountPercent > 0) {
-      return (product.price * (100 - product.discountPercent)) / 100;
-    }
-    return product.price;
-  };
+  return 0;
+};
 
   return (
     <div className="py-20">
@@ -161,7 +166,7 @@ export default function AdminProducts() {
                     {product.discountPercent && product.discountPercent > 0 ? (
                       <div>
                         <span className="text-sm text-gray-400 line-through">BDT {product.price.toFixed(2)}</span>
-                        <div className="text-black">BDT {getDisplayPrice(product).toFixed(2)}</div>
+                        <div className="text-black">BDT {getDisplayWithOutDiscountPrice(product).toFixed(2)}</div>
                       </div>
                     ) : (
                       <span>BDT {product.price.toFixed(2)}</span>
